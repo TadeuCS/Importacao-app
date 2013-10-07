@@ -27,25 +27,10 @@ public class Conexao {
     private static Statement st;
     private static String diretorio = null;
 
-    public static Connection getCon() {
-        return con;
+    public Conexao() {
     }
 
-    public static void setCon(Connection con) {
-        Conexao.con = con;
-    }
-
-    public static Statement getSt() {
-        return st;
-    }
-
-    public static void setSt(Statement st) {
-        Conexao.st = st;
-    }
-    
-    
-
-    public void conecta1() throws Exception {
+    public void conecta() throws Exception {
         try {
             Class.forName("org.firebirdsql.jdbc.FBDriver");
             con = DriverManager.getConnection("jdbc:firebirdsql://localhost:3050/" + diretorio,
@@ -61,20 +46,22 @@ public class Conexao {
         }
     }
 
-    public void conecta2() throws Exception {
-        try {
-            Class.forName("org.firebirdsql.jdbc.FBDriver");
-            con = DriverManager.getConnection(
-                    "jdbc:firebirdsql://" + "" + ":3050/" + diretorio,
-                    "SYSDBA",
-                    "masterkey");
-            st = con.createStatement();
-        } catch (ClassNotFoundException ex)//caso o driver não seja localizado  
-        {
-            JOptionPane.showMessageDialog(null, "Driver não encontrado!");
-        } catch (SQLException ex)//caso a conexão não possa se realizada  
-        {
-            JOptionPane.showMessageDialog(null, "Problemas na conexao com a fonte de dados");
-        }
+    public void desconecta() throws Exception{
+        con.close();
+    }
+        public static Connection getCon() {
+        return con;
+    }
+
+    public static void setCon(Connection con) {
+        Conexao.con = con;
+    }
+
+    public static Statement getSt() {
+        return st;
+    }
+
+    public static void setSt(Statement st) {
+        Conexao.st = st;
     }
 }
